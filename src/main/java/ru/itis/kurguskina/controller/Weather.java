@@ -27,7 +27,7 @@ public class Weather {
     public Weather(UserRepository userRepository, WeatherRepository weatherRepository) {
         this.userRepository = userRepository;
         this.weatherRepository = weatherRepository;
-}
+    }
 
     public Weather(String description, String humidity, String temp, String name, String userEmail, UserRepository userRepository, WeatherRepository weatherRepository) {
         this.userRepository = userRepository;

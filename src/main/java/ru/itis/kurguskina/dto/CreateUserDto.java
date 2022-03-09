@@ -13,6 +13,9 @@ public class CreateUserDto {
     @Size(min=6, max=20)
     private String password;
 
+    public CreateUserDto() {
+    }
+
     public String getName() {
         return name;
     }

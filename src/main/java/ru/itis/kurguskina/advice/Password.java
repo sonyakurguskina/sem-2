@@ -4,7 +4,6 @@ import jakarta.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
 public class Password {
     public static String encrypt(String password) {
         MessageDigest md;

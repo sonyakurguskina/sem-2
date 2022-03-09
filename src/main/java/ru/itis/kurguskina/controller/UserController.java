@@ -1,37 +1,53 @@
 package ru.itis.kurguskina.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.kurguskina.dto.CreateUserDto;
 import ru.itis.kurguskina.dto.UserDto;
-import ru.itis.kurguskina.model.User;
-import ru.itis.kurguskina.repository.UserRepository;
+import ru.itis.kurguskina.service.UserService;
 
 import javax.validation.Valid;
-import java.util.stream.Collectors;
 
-@RestController
+
+@Controller
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/user")
+    @ResponseBody
     public Iterable<UserDto> getAll() {
-        return userRepository.findAll().stream().map(UserDto::fromModel).collect(Collectors.toList());
+        return userService.getAll();
     }
 
     @GetMapping("/user/{id}")
+    @ResponseBody
     public UserDto get(@PathVariable Integer id) {
-        return userRepository.findById(id).stream().map(UserDto::fromModel).findFirst().orElse(null);
+        return userService.getById(id);
     }
 
     @PostMapping("/user")
+    @ResponseBody
     public UserDto createUser(@Valid @RequestBody CreateUserDto user) {
-        return UserDto.fromModel(userRepository.save(new User(user.getName(), user.getEmail())));
+        return userService.save(user);
+    }
+
+    @PostMapping("/sign_up")
+    public String signUp(@ModelAttribute(name = "user") CreateUserDto userDto) {
+        System.out.println(userDto);
+        userService.save(userDto);
+
+        return "sign_up_success";
+    }
+
+    @GetMapping("/error")
+    public String getLoginFail() {
+        return "login_fail";
     }
 }
