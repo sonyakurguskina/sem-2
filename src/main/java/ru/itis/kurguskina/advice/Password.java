@@ -1,6 +1,6 @@
 package ru.itis.kurguskina.advice;
 
-import jakarta.xml.bind.DatatypeConverter;
+import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 

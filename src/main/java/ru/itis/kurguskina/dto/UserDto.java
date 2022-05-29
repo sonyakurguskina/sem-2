@@ -39,7 +39,7 @@ public class UserDto {
         this.email = email;
     }
 
-    public static UserDto fromModel(User user) {
+    public static User fromModel(User user) {
         return new UserDto(user.getId(), user.getName(), user.getEmail());
     }
 }

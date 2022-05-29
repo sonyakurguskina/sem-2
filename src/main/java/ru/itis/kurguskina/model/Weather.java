@@ -1,11 +1,19 @@
 package ru.itis.kurguskina.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 public class Weather {
     @javax.persistence.Id
@@ -18,64 +26,7 @@ public class Weather {
     private String city;
     private String email;
 
-    public Weather(Integer id, String description, String humidity, String temp, String city, String email) {
-        this.id = id;
-        this.description = description;
-        this.humidity = humidity;
-        this.temp = temp;
-        this.city = city;
-        this.email = email;
-    }
+    public Weather(String description, String humidity, String temp, String name, String email) {
 
-    public Weather() {
-
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setHumidity(String humidity) {
-        this.humidity = humidity;
-    }
-
-    public void setTemp(String temp) {
-        this.temp = temp;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getHumidity() {
-        return humidity;
-    }
-
-    public String getTemp() {
-        return temp;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getEmail() {
-        return email;
     }
 }

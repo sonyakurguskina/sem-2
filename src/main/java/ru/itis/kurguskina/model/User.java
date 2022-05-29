@@ -1,11 +1,19 @@
 package ru.itis.kurguskina.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "users")
 public class User {
@@ -14,75 +22,34 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(name = "name")
     private String name;
 
     @Column(unique = true)
     private String email;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-    )
-    private Set<Role> roles;
-
-    @Size(min = 8, max = 64, message = "Password should contain from 8 to 64 symbols")
     @Column(nullable = false, length = 64)
     private String password;
 
-    public Set<Role> getRoles() {
-        return roles;
+    public <T> User(String name, String email, String encode, List<T> emptyList, String code) {
+
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setVerificationCode(String s) {
     }
 
-    public User() {}
+    public enum State {
+        NOT_CONFIRMED, CONFIRMED
+    };
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @Column(length = 64)
+    private String confirmCode;
 
-    public Integer getId() {
-        return id;
-    }
+    @Enumerated(value = EnumType.STRING)
+    private State state;
 
-    public String getName() {
-        return name;
-    }
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<Appeal> appeals;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(Integer id,String name, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
+    private boolean enabled;
 }

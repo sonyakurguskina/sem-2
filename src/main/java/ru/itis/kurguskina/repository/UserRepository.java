@@ -1,5 +1,7 @@
 package ru.itis.kurguskina.repository;
 
+
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +16,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     UserDto findByEmail(String email);
 
     User getUserByEmail(String email);
+    User findAllByConfirmCode(String code);
+    List<User> findAllByState(User.State state);
 
     @Query("select u from User u where u.name = 'Stepan'")
     List<User> findAllStepanUser();
@@ -28,4 +32,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "select u from User u where u.id in :ids")
     List<User> findAllByIds(@Param("ids") List<Integer> ids);
+
+    User findByVerificationCode(String code);
 }
